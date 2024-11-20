@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Item } from '@radix-ui/react-select';
+import Link from 'next/link';
 
 
 type Props = {}
@@ -509,7 +510,12 @@ const page = (props: Props) => {
     </div>
 
   </div>
+  <div>
+    <Link  href="/bot"> BOT </Link>
+  </div>
 </div>
+
+
 
 
   )
