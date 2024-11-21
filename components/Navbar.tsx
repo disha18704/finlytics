@@ -1,3 +1,4 @@
+import './navbar.css'
 import Image from 'next/image'
 import React from 'react'
 import logo from '../app/assets/image/logo.png'
@@ -27,27 +28,13 @@ export default function Navbar() {
 
       {/* Navigation Links */}
       <div style={{ display: "flex", gap: "20px" }}>
-        <a
-          href="/"
-          style={{
-            color: "gray",
-            textDecoration: "none",
-            fontSize: "16px",
-            fontWeight: "500",
-            marginLeft:"30",
-            marginRight:"20",
-          }}
-        >
-          Home
-        </a>
+
+        <div style={{marginLeft:"30", marginRight:"20",}}>
+        <a href="/">Home</a>
+        </div>
+
         <a
           href="/bot"
-          style={{
-            color: "gray",
-            textDecoration: "none",
-            fontSize: "16px",
-            fontWeight: "500",
-          }}
         >
           Ask Ai
         </a>

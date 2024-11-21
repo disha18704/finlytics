@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select"
 import { Item } from '@radix-ui/react-select';
 import Link from 'next/link';
+import {CircularProgress} from "@nextui-org/progress";
 
 
 type Props = {}
@@ -111,11 +112,6 @@ const page = (props: Props) => {
           console.log(jsonData)
 
           setPredictions(jsonData)
-
-
-      
-
-  
         }
 
       }
@@ -233,7 +229,7 @@ const page = (props: Props) => {
     "ATOM":{
     name:"Atomera Energy PLC",
     about:"Atomera Incorporated is a materials science company focusing on advancing semiconductor technology. It specializes in developing and licensing its proprietary technology, Mears Silicon Technology (MST), designed to improve the performance and efficiency of semiconductor devices​.",
-    growth_margin:"none",
+    growth_margin:"hi",
     net_profit:"none",
     eps:"-$1.20",
     roe:"Negative",
@@ -329,16 +325,20 @@ const page = (props: Props) => {
   return (
 <div style={{ color: "white", display: "flex", flexDirection: 'column' }}>
   {/* Styled Ticker Name and Company Name */}
+
   <div style={{
     display: "flex",
-    alignItems: "center",
+    alignItems: "baseline",
     backgroundColor: "black",
+    font :"caption",
     padding: "10px",
+    fontFamily: "sans-serif"
   }}>
     <span style={{
       fontSize: "24px",
       fontWeight: "bold",
       marginRight: "8px",
+      fontFamily: "sans-serif"
     }}>
       {temp?.name}
     </span>
@@ -346,9 +346,17 @@ const page = (props: Props) => {
       fontSize: "18px",
       fontWeight: "lighter",
       color: "gray",
+      fontFamily: "sans-serif"
     }}>
       {tickerName}
     </span>
+  </div>
+
+  <div style={{
+    backgroundColor:"#27272a",
+    height:2,
+  }}>
+
   </div>
 
   {/* Chart */}
@@ -392,8 +400,10 @@ const page = (props: Props) => {
       </ChartContainer>
     </div>
 
-    {/* "hekki" */}
+    
     <div style={{
+      display: 'flex',
+      flexDirection :'column',
       marginLeft: "20px", // Space between the chart and text
       whiteSpace: "nowrap",
       width: '50%',
@@ -402,9 +412,21 @@ const page = (props: Props) => {
 
       {/* About The Company */}
 
-      <div style={{marginBottom: 20}}>
-        <p>about</p>
-        <p>{temp?.about}</p>
+      <div style={{marginBottom: 20,}}>
+        <p style={{
+          fontSize:25,
+          fontFamily: "sans-serif"
+        }}>About</p>
+        <div style={{
+          backgroundColor:"#27272a",
+          height:2,
+          width:30,
+  
+        }}></div>
+        <p style={{
+          fontSize:15,
+          color:"#cccccc"
+        }}>{temp?.about}</p>
       </div>
 
       {/* KEY STATS */}
@@ -415,19 +437,98 @@ const page = (props: Props) => {
     }}>
 
     <div>
-      <p>Key stats</p>
-      <p>Gross Margin: {temp?.gross_margin}</p>
-      <p>Net Profit: {temp?.net_profit}</p>
-      <p>Earnings Per Share:{temp?.eps}</p>
-      <p>Return on Equity:{temp?.roe}</p>
-      <p>Compound Annual Growth Rate:{temp?.cagr}</p>
+      <p style={{
+        fontSize: 18,
+        marginBottom:15,
+        fontFamily:"sans-serif"
+      }}>Key Stats</p>
 
+    <div style={{
+      fontSize:12,
+      color: '#cccccc',
+      // backgroundColor: 'red',
+    }}>
+
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'baseline', marginBottom: 5}}>
+          <p>Gross Margin</p>
+          <div style={{
+            backgroundColor:"#27272a",
+            height:1,
+            flexGrow: 1,
+            marginLeft: 10,
+            width: 400,
+            marginRight: 10
+          }}></div>
+          <p>{temp?.gross_margin}</p>
+      </div>
+
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'baseline', marginBottom: 5}}>
+      <p>Net Profit</p>
+      <div style={{
+            backgroundColor:"#27272a",
+            height:1,
+            // flexGrow: 1,
+            marginLeft: 10,
+            width: 400,
+
+            marginRight: 10
+          }}></div>
+      <p>{temp?.net_profit}</p>
+
+      </div>
+
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'baseline', marginBottom: 5}}>
+      <p>Earnings Per Share</p>
+      <div style={{
+            backgroundColor:"#27272a",
+            height:1,
+            // flexGrow: 1,
+            marginLeft: 10,
+            width: 400,
+
+            marginRight: 10
+          }}></div>
+          <p>{temp?.eps}</p>
+
+      </div>
+
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'baseline', marginBottom: 5}}>
+      <p>Return on Equity</p>
+      <div style={{
+        backgroundColor:"#27272a",
+        height:1,
+        // flexGrow: 1,
+        marginLeft: 10,
+        width: 400,
+
+        marginRight: 10
+      }}></div>
+      <p>{temp?.roe}</p>
+
+      </div>
+
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'baseline', marginBottom: 5}}>
+      <p>Compound Annual Growth Rate</p>
+      <div style={{
+        backgroundColor:"#27272a",
+        height:1,
+        // flexGrow: 1,
+        marginLeft: 10,
+        width: 400,
+
+        marginRight: 10
+      }}></div>
+      <p>{temp?.cagr}</p>
+      </div>
       
+    </div>
+
+    
       </div>
 
     
 
-      <div>
+      {/* <div>
         <p style={{
           marginBottom:10,
         }}>
@@ -437,64 +538,123 @@ const page = (props: Props) => {
         <p style={{
           marginBottom:10
         }}>
-          Predicted Opening Price:{predictions?.open}
+          Predicted Opening Price:{predictions?.open?.toString().substring(0,5)}
         </p>
 
         <p>
-          Predicted Closing Price:{predictions?.close}
+          Predicted Closing Price:{predictions?.close?.toString().substring(0,5)}
         </p>
 
-      </div>
+      </div> */}
 
     </div>
       
     </div>
   </div>
 
+
+  <div style={{
+    marginTop:50,
+    display:"flex",
+    justifyContent:"center",
+    justifyItems:"center",
+    flexDirection: 'column'
+  }}>
+<p style={{
+  textAlign: "center",
+  fontSize: 50,
+  fontFamily: "sans-serif",
+  textDecoration: "underline",
+  textDecorationColor: "#27272a",  // Set underline color
+  textDecorationThickness: "2px",   // Optional: Adjust the thickness of the underline
+  textUnderlineOffset: "18px"        // Add space between text and underline
+}}>
+  Predictions for Tomorrow
+</p>
+
+    <div style={{display: 'flex', flexDirection: 'row', marginTop: 100, justifyContent: 'center', alignItems: 'center', gap: 100}}>
+
+    <div style={{
+      display: 'flex',
+      borderWidth:3,
+      borderColor:"#cccccc",
+      height:200,
+      width:200,
+      borderRadius:100,
+      alignItems: 'center',
+      alignContent: 'center',
+      justifyContent: 'center',
+      justifyItems: 'center',
+      alignSelf: 'center',
+      fontSize:50,
+    }}>
+      <p>{predictions?.open?.toString().substring(0,5)}</p>
+    </div>
+    <div style={{
+      display: 'flex',
+      borderWidth:3,
+      borderColor:"#cccccc",
+      height:200,
+      width:200,
+      borderRadius:100,
+      alignItems: 'center',
+      alignContent: 'center',
+      justifyContent: 'center',
+      justifyItems: 'center',
+      alignSelf: 'center',
+      fontSize: 50
+      
+    }}>
+      <p>{predictions?.close?.toString().substring(0,5)}</p>
+    </div>
+    </div>
+
+  </div>
+
   <p style={{
     marginTop:70,
     fontSize:25,
+    fontFamily: "sans-serif",
   }}>
       Quick Glance:
       </p>
 
   <div style={{
-    marginTop:40,
+    marginTop:20,
     display:"flex",
     flexDirection:"row",
     justifyContent:"space-between",
   }}>
-
- 
-    
-
     <div>
   
 
   {userChoice==="ten_k" ? (  <ul>
     {temp?.ten_k.map((item, index) => (
-      <li key={index}>{item}</li>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+        <div style={{height: 2, width: 5, backgroundColor: '#cccccc'}}></div>
+        <li key={index} style={{textAlign: 'center', marginLeft: 10, color: '#cccccc'}}>{item}</li>
+      </div>
     ))}
   </ul>): (null)}
 
   {userChoice==="ten_q" ? (  <ul>
     {temp?.ten_q.map((item, index) => (
-      <li key={index}>{item}</li>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+            <div style={{height: 2, width: 5, backgroundColor: '#cccccc'}}></div>
+            <li key={index} style={{textAlign: 'center', marginLeft: 10, color: '#cccccc'}}>{item}</li>
+          </div>
     ))}
   </ul>): (null)}
 
   {userChoice==="eight_k" ? (  <ul>
     {temp?.eight_k.map((item, index) => (
-      <li key={index}>{item}</li>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+            <div style={{height: 2, width: 5, backgroundColor: '#cccccc'}}></div>
+            <li key={index} style={{textAlign: 'center', marginLeft: 10, color: '#cccccc'}}>{item}</li>
+          </div>
     ))}
   </ul>): (null)}
-
-    
-
-
     </div>
-
-
     <div>
       <Select onValueChange={setUserChoice}>
     <SelectTrigger className="w-[180px]">
@@ -510,9 +670,7 @@ const page = (props: Props) => {
     </div>
 
   </div>
-  <div>
-    <Link  href="/bot"> BOT </Link>
-  </div>
+
 </div>
 
 
