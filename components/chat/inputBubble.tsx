@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Arrow from "../../app/assets/image/app_logo.png";
 import Image from "next/image";
+import {Input} from "@nextui-org/input";
+import { Button } from "@nextui-org/button";
 
 type Props = {
   handleSubmit: (text: string)=>void;
@@ -25,21 +27,22 @@ const InputBubble = ({handleSubmit, isLoading}: Props) => {
   };
 
   return (
-    <div className="flex flex-1 w-full h-full bg-[#f2f4f7] rounded-3xl p-3 shadow-lg z-10">
-      <input
+    <div className="flex flex-1 w-full h-full rounded-3xl p-3 shadow-lg z-10">
+      <Input
         type="text"
         value={currentText}
+        variant="bordered"
         onChange={(e) => setCurrentText(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="flex flex-1 rounded-md focus:outline-none bg-[#f2f4f7]"  
-        style={{ color: 'red'}}
+        className="flex flex-1 rounded-md focus:outline-none"  
+        style={{ color: 'white'}}
+        size="lg"
         placeholder="Ask ClinGraph"
       />
 
-
-      <button className="focus:outline-none hover:bg-[#e4e6eb] p-2 rounded-full" onClick={buttonClick} disabled={isLoading} >
+      <Button className="focus:outline-none hover:bg-[#e4e6eb] p-2 rounded-full" onClick={buttonClick} disabled={isLoading} >
         <Image alt="orange-arrow" src={Arrow} height={35} width={35} />
-      </button>
+      </Button>
     </div>
   );
 };
