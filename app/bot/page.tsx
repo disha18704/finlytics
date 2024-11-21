@@ -3,7 +3,7 @@
 import InputBubble from "@/components/chat/inputBubble";
 import React, { useState, useEffect, useRef } from "react";
 import { Spinner } from "@nextui-org/spinner";
-import logo from "../assets/image/app_logo.png";
+import logo from "../assets/image/logo.png";
 import Image from "next/image";
 import IntroComponent from "@/components/chat/introComponent";
 import ChatBubble from "@/components/chat/chatBubble";
@@ -18,7 +18,7 @@ const Page = (props: Props) => {
 
   const formatConversationIntoContext = () => {
     return conversation.map((item) => {
-      return `user: "${item.userMessage}"\n       ClinGraph (You): "${item.llmResponse}"\n`;
+      return `user: "${item.userMessage}"\n       finBot (You): "${item.llmResponse}"\n`;
     }).join('');
   };
 
@@ -94,12 +94,12 @@ const Page = (props: Props) => {
   }, [conversation]);
 
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 mx-24">
       <div className="fixed bottom-8" style={{ width: "50%", zIndex: 10 }}>
         <InputBubble handleSubmit={handleInputSubmit} isLoading={loading} />
       </div>
 
-      {conversation.length > 0 ? null : <IntroComponent />}
+      {/* {conversation.length > 0 ? null : <IntroComponent />} */}
 
       {conversation.map((item, index) => (
         <React.Fragment key={index}>
@@ -115,16 +115,17 @@ const Page = (props: Props) => {
               marginBottom: conversation.length === item.id ? 100 : 0,
             }}
           >
+
             <Image
-              alt="ClinGraph Logo"
+              alt="Finlytics Logo"
               src={logo}
-              width={45}
-              height={45}
-              style={{ borderRadius: 20 }}
+              width={40}
+              height={40}
+              style={{ borderRadius: 80, backgroundColor:"#27272a", padding: 5, paddingTop: 11, paddingBottom: 11 }}
             />
             {item.llmResponse === "null" ? (
               <div
-                className="flex flex-1 ml-3 items-center bg-[#f2f4f7] p-3 rounded-lg"
+                className="flex flex-1 ml-3 items-center p-3 rounded-lg"
                 style={{ boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)" }}
               >
                 <p style={{ marginRight: 15 }}>Analyzing</p>

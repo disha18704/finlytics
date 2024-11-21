@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Arrow from "../../app/assets/image/app_logo.png";
-import Image from "next/image";
 import {Input} from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
+import { ChevronRight } from "lucide-react"
 
 type Props = {
   handleSubmit: (text: string)=>void;
@@ -27,7 +25,7 @@ const InputBubble = ({handleSubmit, isLoading}: Props) => {
   };
 
   return (
-    <div className="flex flex-1 w-full h-full rounded-3xl p-3 shadow-lg z-10">
+    <div className="flex flex-1 w-full h-full shadow-lg z-10">
       <Input
         type="text"
         value={currentText}
@@ -37,12 +35,13 @@ const InputBubble = ({handleSubmit, isLoading}: Props) => {
         className="flex flex-1 rounded-md focus:outline-none"  
         style={{ color: 'white'}}
         size="lg"
-        placeholder="Ask ClinGraph"
+        placeholder="Write a message"
+        endContent={
+          <ChevronRight onClick={buttonClick}/> 
+        }
       />
 
-      <Button className="focus:outline-none hover:bg-[#e4e6eb] p-2 rounded-full" onClick={buttonClick} disabled={isLoading} >
-        <Image alt="orange-arrow" src={Arrow} height={35} width={35} />
-      </Button>
+
     </div>
   );
 };

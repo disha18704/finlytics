@@ -22,6 +22,9 @@ const ChatBubble = ({ messageType, message }: Props) => {
         maxWidth: messageType === "user" ? "50%" : "",
         boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
         display: "inline-block",
+        borderWidth: 1,
+        borderColor: '#27272a',
+        borderRadius: 20
       }}
     >
       {messageType === "user" ? (
