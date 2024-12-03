@@ -1,0 +1,24 @@
+uvicorn
+fastapi
+beautiful
+keras==3.2.1
+lxml_html_clean
+llama-index==0.12.0
+llama-index-core==0.12.2
+llama-index-embeddings-huggingface
+llama-index-llms-groq
+llama-index-llms-huggingface-api
+numpy
+pandas
+pydantic
+python-dotenv
+pytorch_forecasting==1.1.1
+requests
+requests_html
+scikit-learn
+# tensorflow-macos
+# tensorflow-metal
+tensorflow
+transformers==4.39.2
+torch
+yahoo-fin
