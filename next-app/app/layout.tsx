@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Finlytics Hover Logo</title>
+        <title>Finlytics</title>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

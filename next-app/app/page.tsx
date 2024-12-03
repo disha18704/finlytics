@@ -23,7 +23,10 @@ export default function Home() {
       const stock_name = query.toUpperCase();
       router.push(`/stock?name=${stock_name}`);
     } else {
-      toast.error(`${query} not found.`);
+      // toast.error(`${query} not found.`);
+      toast.error(
+        "Currently available stocks: ATOM, NATH, HBIO, MYFW, IBEX."
+      );
     }
   };
 
