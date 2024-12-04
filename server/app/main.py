@@ -16,3 +16,4 @@ app.add_middleware(
 app.include_router(ticker.router)
 app.include_router(prediction.router)
 app.include_router(query.router)
+
