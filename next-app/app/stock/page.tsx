@@ -57,7 +57,8 @@ const Page = () => {
       const interval = "1mo";
 
       try {
-        const api_url = "http://localhost:8000/fetch-ticker-data/";
+        // const api_url = "http://localhost:8000/fetch-ticker-data/";
+        const api_url= "https://finlytics-server-356375397338.asia-south2.run.app/fetch-ticker-data/"
         const data = {
           ticker: stock_name,
           start_date: prev_year_date,
