@@ -91,7 +91,8 @@ const Page = () => {
       const interval = "1d";
 
       try {
-        const api_url = "http://localhost:8000/predict-prices/";
+        // const api_url = "http://localhost:8000/predict-prices/";
+        const api_url= "https://finlytics-server-356375397338.asia-south2.run.app/predict-prices/"
         const data = {
           ticker: stock_name,
           start_date: prev_year_date,
