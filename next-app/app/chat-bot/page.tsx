@@ -28,7 +28,8 @@ const ChatPage = () => {
 
   const queryRag = async (query: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/query-rag/${query}`);
+      // const response = await fetch(`http://localhost:8000/query-rag/${query}`);
+      const response = await fetch(`https://finlytics-server-356375397338.asia-south2.run.app/query-rag/${query}`);
       if (response.ok) {
         const jsonData = await response.json();
         return jsonData.message.response;
