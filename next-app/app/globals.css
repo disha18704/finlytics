@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050505;
+  --foreground: #ededed;
   --navbar-link-active-color: #ffffff;
   --navbar-logo-font-color: #6f7374;
 }
