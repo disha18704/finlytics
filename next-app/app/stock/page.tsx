@@ -58,7 +58,7 @@ const Page = () => {
 
       try {
         // const api_url = "http://localhost:8000/fetch-ticker-data/";
-        const api_url= "https://finlytics-server-356375397338.asia-south2.run.app/fetch-ticker-data/"
+        const api_url= "https://finlytics-gcp-188865275452.europe-west1.run.app/fetch-ticker-data/"
         const data = {
           ticker: stock_name,
           start_date: prev_year_date,
@@ -92,7 +92,7 @@ const Page = () => {
 
       try {
         // const api_url = "http://localhost:8000/predict-prices/";
-        const api_url= "https://finlytics-server-356375397338.asia-south2.run.app/predict-prices/"
+        const api_url= "https://finlytics-gcp-188865275452.europe-west1.run.app/predict-prices/"
         const data = {
           ticker: stock_name,
           start_date: prev_year_date,
