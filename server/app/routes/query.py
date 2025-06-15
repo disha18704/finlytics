@@ -19,7 +19,7 @@ def query_rag(user_query: str):
     index = load_index_from_storage(storage_context, embed_model=embed_model)
 
     llm = HuggingFaceInferenceAPI(
-        model_name="HuggingFaceH4/zephyr-7b-alpha", token=os.getenv('HF_API'),
+        model_name="HuggingFaceH4/zephyr-7b-beta", token=os.getenv('HF_API'),
     )
 
     query_engine = index.as_query_engine(llm=llm)

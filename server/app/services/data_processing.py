@@ -5,7 +5,7 @@ from fastapi import HTTPException
 def fetch_and_process_ticker_data(ticker, start_date, end_date, interval="1d"):
     df = pd.DataFrame()
     try:
-        temp = get_data(ticker, start_date=start_date, end_date=end_date, index_as_date=True, interval=interval)
+        temp = get_data(ticker, start_date=start_date, end_date=end_date, index_as_date=True, interval=interval, headers={'User-agent': 'Mozilla/5.0'})
         temp = temp.drop(columns="close")
         temp["revenue"] = temp["adjclose"] * temp["volume"]
         temp["daily_profit"] = temp["adjclose"] - temp["open"]
