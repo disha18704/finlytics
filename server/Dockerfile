@@ -8,13 +8,16 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install dependencies
-RUN pip install -r requirements.txt
+# Added --no-cache-dir to keep the image size small
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application
 COPY . .
 
-# Expose the port
-EXPOSE 8000
+# Cloud Run injects the PORT environment variable (default 8080)
+# We must listen on this port, not a hardcoded one.
+ENV PORT=8080
 
 # Command to run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"] 
+# We use "sh -c" (shell form) so that ${PORT} is actually expanded to the value 8080 (or whatever Cloud Run sets)
+CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"
