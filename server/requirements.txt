@@ -22,4 +22,4 @@ tensorflow==2.16.2
 transformers==4.39.2
 torch==2.5.1
 yahoo-fin==0.8.9.1
-yfinance=0.2.66
+yfinance==0.2.66
