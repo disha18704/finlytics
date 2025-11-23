@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation"; // <--- IMPORT THIS
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import {
@@ -33,7 +33,7 @@ type PredictionData = {
   close: number;
 };
 
-const Page = () => {
+const StockPageContent = () => {
   const searchParams = useSearchParams(); // <--- USE THE HOOK
   const stockNameFromUrl = searchParams.get("name"); // Get ticker safely
 
@@ -392,4 +392,24 @@ const Page = () => {
   );
 };
 
+const Page = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen px-4 pt-24 text-white flex items-center justify-center">
+          <Spinner
+            size="lg"
+            color="white"
+            classNames={{
+              circle1: "border-white/80",
+              circle2: "border-white/60",
+            }}
+          />
+        </div>
+      }
+    >
+      <StockPageContent />
+    </Suspense>
+  );
+};
 export default Page;
