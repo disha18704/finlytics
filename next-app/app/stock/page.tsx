@@ -73,7 +73,7 @@ const Page = () => {
 
       try {
         // Use 127.0.0.1 to avoid localhost IPv6 issues
-        const api_url = "http://127.0.0.1:8001/fetch-ticker-data/";
+        const api_url = "http://localhost:8080/fetch-ticker-data/";
         
         const data = {
           ticker: stock_name,
@@ -112,7 +112,7 @@ const Page = () => {
       console.log(`🔮 Fetching Predictions for ${stock_name}...`);
 
       try {
-        const api_url = "http://127.0.0.1:8001/predict-prices/";
+        const api_url = "http://localhost:8080/predict-prices/";
         
         const data = {
           ticker: stock_name,

@@ -20,4 +20,4 @@ ENV PORT=8080
 
 # Command to run the application
 # We use "sh -c" (shell form) so that ${PORT} is actually expanded to the value 8080 (or whatever Cloud Run sets)
-CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"]

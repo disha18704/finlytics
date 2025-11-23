@@ -85,7 +85,7 @@ cp .env.template .env
 
 5. Start the FastAPI server:
 ```bash
-uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+uvicorn app.main:app --host 127.0.0.1 --port 8080 --reload
 ```
 
 ## 📦 Deployment
