@@ -32,7 +32,7 @@ const ChatPage = () => {
       const response = await fetch(`https://finlytics-backend-1218026744.europe-west1.run.app/query-rag/${query}`);
       if (response.ok) {
         const jsonData = await response.json();
-        return jsonData.message.response;
+        return jsonData.message;
       }
     } catch (err) {
       console.error("Error querying RAG:", err);

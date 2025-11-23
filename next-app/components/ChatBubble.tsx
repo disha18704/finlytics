@@ -28,8 +28,8 @@ const ChatBubble = ({ fromUser, message }: Props) => {
   useEffect(() => {
     if (!fromUser) {
       let currentIndex = 0;
-      const trimmedMessage = message.trim();
-      const characters = CharSplitterRegex(trimmedMessage);
+      // const trimmedMessage = message.trim();
+      const characters = CharSplitterRegex(message);
 
       const typingInterval = setInterval(() => {
         if (currentIndex < characters.length) {
