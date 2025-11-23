@@ -1,24 +1,24 @@
 uvicorn==0.33.0
 fastapi==0.115.6
 beautiful==0.0.2
-keras==3.2.1
+keras==3.10.0
 lxml_html_clean==0.4.1
-llama-index==0.12.0
-llama-index-core==0.12.2
-llama-index-embeddings-huggingface==0.4.0
-llama-index-llms-groq==0.3.0
-llama-index-llms-huggingface-api==0.3.0
+llama-index-core==0.14.8
+llama-index-embeddings-huggingface==0.6.1
+llama-index-llms-groq==0.4.1
+llama-index-llms-huggingface-api==0.6.1
 numpy==1.26.4
 pandas==2.2.3
-pydantic==2.9.2
+pydantic==2.12.4
 python-dotenv==1.0.1
-pytorch_forecasting==1.1.1
+pytorch-forecasting==1.1.1
 requests==2.32.3
-requests_html==0.10.0
+requests-html==0.10.0
 scikit-learn==1.6.0
-# tensorflow-macos
-# tensorflow-metal
-tensorflow==2.16.2
-transformers==4.39.2
+tensorflow==2.20.0
+tf_keras==2.20.1
+transformers==4.57.1
 torch==2.5.1
 yahoo-fin==0.8.9.1
+yfinance==0.2.66
+

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation"; // <--- IMPORT THIS
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import {
   ChartConfig,
@@ -33,6 +34,9 @@ type PredictionData = {
 };
 
 const Page = () => {
+  const searchParams = useSearchParams(); // <--- USE THE HOOK
+  const stockNameFromUrl = searchParams.get("name"); // Get ticker safely
+
   const [graphData, setGraphData] = useState<GraphDataItem[]>([]);
   const [companyName, setCompanyName] = useState<string>("");
   const [ticker, setTicker] = useState<string>("");
@@ -47,18 +51,30 @@ const Page = () => {
 
     return {
       current_date: `${year}-${month}-${day}`,
-      prev_year_date: `${year - 1}-${month}-${day}`,
+      // Start from 2 years ago to ensure we have enough data for the 60-day window
+      prev_year_date: `${year - 2}-${month}-${day}`, 
     };
   }
 
   useEffect(() => {
+    // Debugging: Check if code is running
+    console.log("🔄 Effect triggered. Stock:", stockNameFromUrl);
+
+    if (!stockNameFromUrl) {
+      console.log("❌ No stock name in URL. Waiting...");
+      return;
+    }
+
     const fetchGraphData = async (stock_name: string) => {
       const { current_date, prev_year_date } = getCurrentFormattedDate();
       const interval = "1mo";
 
+      console.log(`📡 Fetching Graph Data for ${stock_name}...`);
+
       try {
-        const api_url = "http://localhost:8000/fetch-ticker-data/";
-        // const api_url= "https://finlytics-gcp-188865275452.europe-west1.run.app/fetch-ticker-data/"
+        // Use 127.0.0.1 to avoid localhost IPv6 issues
+        const api_url = "https://finlytics-backend-1218026744.europe-west1.run.app/fetch-ticker-data/";
+        
         const data = {
           ticker: stock_name,
           start_date: prev_year_date,
@@ -68,21 +84,24 @@ const Page = () => {
 
         const response = await fetch(api_url, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
+
+        console.log("Graph Data Status:", response.status);
 
         if (response.ok) {
           const jsonData = await response.json();
           setGraphData(jsonData);
-          const stockData = stock_info[stock_name as keyof typeof stock_info];
-          setCompanyName(stockData?.name || "");
+          // Safe access to stock info
+          const info = stock_info[stock_name as keyof typeof stock_info];
+          setCompanyName(info?.name || stock_name);
           setTicker(stock_name);
+        } else {
+          console.error("Graph fetch failed:", await response.text());
         }
       } catch (err) {
-        console.log(err);
+        console.error("Graph fetch error:", err);
       }
     };
 
@@ -90,9 +109,11 @@ const Page = () => {
       const { current_date, prev_year_date } = getCurrentFormattedDate();
       const interval = "1d";
 
+      console.log(`🔮 Fetching Predictions for ${stock_name}...`);
+
       try {
-        const api_url = "http://localhost:8000/predict-prices/";
-        // const api_url= "https://finlytics-gcp-188865275452.europe-west1.run.app/predict-prices/"
+        const api_url = "https://finlytics-backend-1218026744.europe-west1.run.app/predict-prices/";
+        
         const data = {
           ticker: stock_name,
           start_date: prev_year_date,
@@ -102,28 +123,32 @@ const Page = () => {
 
         const response = await fetch(api_url, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
 
+        console.log("Prediction Status:", response.status);
+
         if (response.ok) {
           const jsonData = await response.json();
+          console.log("Predictions received:", jsonData);
           setPredictions(jsonData);
+        } else {
+          console.error("Prediction fetch failed:", await response.text());
         }
       } catch (err) {
-        console.log(err);
+        console.error("Prediction fetch error:", err);
       }
     };
 
-    const searchParams = new URLSearchParams(window.location.search);
-    const stock_name = searchParams.get("name");
-    if (stock_name) {
-      fetchGraphData(stock_name);
-      fetchPredictions(stock_name);
-    }
-  }, []);
+    // Run functions
+    fetchGraphData(stockNameFromUrl);
+    fetchPredictions(stockNameFromUrl);
+
+  }, [stockNameFromUrl]); // <--- RUN WHENEVER URL CHANGES
+
+  // ... Rest of your Chart config and return statement remains exactly the same ...
+  // (Copy your existing JSX return logic here)
 
   const chartData = graphData.map((data, index) => ({
     month: new Date(data.date).toLocaleString("default", { month: "long" }),
@@ -144,10 +169,11 @@ const Page = () => {
   return (
     <div className="min-h-screen px-4 pt-24 text-white">
       <div className="container mx-auto flex h-full gap-4 max-w-[95%]">
+        {/* ... Your existing Cards ... */}
         <Card className="flex-1 bg-black/80 border border-white/20 backdrop-blur-md rounded-2xl px-4 py-4">
           <CardHeader className="mb-8 flex items-baseline">
             <h1 className="text-3xl font-bold mr-4 text-white">
-              {companyName}
+              {companyName || stockNameFromUrl}
             </h1>
             <p className="text-lg text-gray-400">{ticker}</p>
           </CardHeader>
@@ -165,7 +191,7 @@ const Page = () => {
                     tickLine={false}
                     axisLine={false}
                     tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
+                    tickFormatter={(value) => value ? value.slice(0, 3) : ""}
                   />
                   <ChartTooltip
                     cursor={false}
