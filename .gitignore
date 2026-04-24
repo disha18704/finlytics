@@ -1,1 +1,3 @@
 .git-credentials
+server/.env
+server/lightning_logs/

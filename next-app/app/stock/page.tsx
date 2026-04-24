@@ -33,6 +33,10 @@ type PredictionData = {
   close: number;
 };
 
+const API_BASE_URL = (
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000"
+).replace(/\/$/, "");
+
 const StockPageContent = () => {
   const searchParams = useSearchParams(); // <--- USE THE HOOK
   const stockNameFromUrl = searchParams.get("name"); // Get ticker safely
@@ -72,8 +76,7 @@ const StockPageContent = () => {
       console.log(`📡 Fetching Graph Data for ${stock_name}...`);
 
       try {
-        // Use 127.0.0.1 to avoid localhost IPv6 issues
-        const api_url = "https://finlytics-backend-1218026744.europe-west1.run.app/fetch-ticker-data/";
+        const api_url = `${API_BASE_URL}/fetch-ticker-data/`;
         
         const data = {
           ticker: stock_name,
@@ -112,7 +115,7 @@ const StockPageContent = () => {
       console.log(`🔮 Fetching Predictions for ${stock_name}...`);
 
       try {
-        const api_url = "https://finlytics-backend-1218026744.europe-west1.run.app/predict-prices/";
+        const api_url = `${API_BASE_URL}/predict-prices/`;
         
         const data = {
           ticker: stock_name,

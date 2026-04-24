@@ -26,14 +26,18 @@ const ChatBubble = ({ fromUser, message }: Props) => {
   const [isTyping, setIsTyping] = useState(!fromUser);
 
   useEffect(() => {
+    const sanitizedMessage = (message || "").replace(/undefined/g, "").trim();
+    setDisplayedText("");
+
     if (!fromUser) {
       let currentIndex = 0;
-      // const trimmedMessage = message.trim();
-      const characters = CharSplitterRegex(message);
+      setIsTyping(true);
+      const characters = CharSplitterRegex(sanitizedMessage);
 
       const typingInterval = setInterval(() => {
         if (currentIndex < characters.length) {
-          setDisplayedText((prev) => prev + characters[currentIndex]);
+          const nextCharacter = characters[currentIndex] ?? "";
+          setDisplayedText((prev) => prev + nextCharacter);
           currentIndex++;
         } else {
           setIsTyping(false);
@@ -43,7 +47,8 @@ const ChatBubble = ({ fromUser, message }: Props) => {
 
       return () => clearInterval(typingInterval);
     } else {
-      setDisplayedText(message.trim());
+      setIsTyping(false);
+      setDisplayedText(sanitizedMessage);
     }
   }, [message, fromUser]);
 

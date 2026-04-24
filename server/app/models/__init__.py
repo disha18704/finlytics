@@ -4,4 +4,9 @@ class TickerRequest(BaseModel):
     ticker: str
     start_date: str
     end_date: str
-    interval: str = "1d"    
+    interval: str = "1d"
+
+
+class QueryRequest(BaseModel):
+    query: str
+    conversation_context: str = ""

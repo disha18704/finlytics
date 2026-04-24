@@ -12,6 +12,13 @@ interface ConversationItem {
   llmResponse: string;
 }
 
+const API_BASE_URL = (
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000"
+).replace(/\/$/, "");
+
+const sanitizeMessage = (value: string) =>
+  (value || "").replace(/undefined/g, "").trim();
+
 const ChatPage = () => {
   const [conversation, updateConversation] = useState<ConversationItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -26,16 +33,29 @@ const ChatPage = () => {
       .join("");
   };
 
-  const queryRag = async (query: string) => {
+  const queryRag = async (query: string): Promise<string> => {
     try {
-      // const response = await fetch(`http://localhost:8080/query-rag/${query}`);
-      const response = await fetch(`https://finlytics-backend-1218026744.europe-west1.run.app/query-rag/${query}`);
+      const response = await fetch(`${API_BASE_URL}/query-rag`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query,
+          conversation_context: formatConversationIntoContext(),
+        }),
+      });
       if (response.ok) {
         const jsonData = await response.json();
-        return jsonData.message;
+        if (typeof jsonData?.message === "string" && jsonData.message.trim()) {
+          return sanitizeMessage(jsonData.message);
+        }
+        return "I could not generate a valid response. Please try rephrasing your question.";
       }
+      const errorText = await response.text();
+      console.error("Error querying RAG:", errorText);
+      return "I could not fetch a response from the backend right now. Please try again.";
     } catch (err) {
       console.error("Error querying RAG:", err);
+      return "Backend is unreachable. Please check if the server is running.";
     }
   };
 
@@ -43,7 +63,12 @@ const ChatPage = () => {
     updateConversation((prev) =>
       prev.map((item) =>
         item.userMessage === userQuery
-          ? { ...item, llmResponse: llmResponse }
+          ? {
+              ...item,
+              llmResponse:
+                sanitizeMessage(llmResponse) ||
+                "I could not generate a response. Please try again.",
+            }
           : item
       )
     );
